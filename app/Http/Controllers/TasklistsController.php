@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Tasklist;
+use App\Task;
 
 class TasklistsController extends Controller
 {
@@ -18,9 +18,9 @@ class TasklistsController extends Controller
      */
     public function index()
     {
-        $tasklists = Tasklist::all();
+        $tasklists = Task::all();
         
-        return view('tasklists.index',[
+        return view('tasklists.index', [
             'tasklists' => $tasklists,
         ]);
     }
@@ -32,7 +32,7 @@ class TasklistsController extends Controller
      */
     public function create()
     {
-        $tasklist = new Tasklist;
+        $tasklist = new Task;
         
         return view('tasklist.create', [
             'tasklist' => $tasklist,
@@ -47,7 +47,7 @@ class TasklistsController extends Controller
      */
     public function store(Request $request)
     {
-        $tasklist = new Tasklist;
+        $tasklist = new Task;
         $tasklist->content = $request->content;
         $tasklist->save();
         
@@ -63,7 +63,7 @@ class TasklistsController extends Controller
      */
     public function show($id)
     {
-        $tasklist = Tasklist::find($id);
+        $tasklist = Task::find($id);
         
         return view('tasklists.show', [
             'tasklist' => $tasklist,
@@ -78,7 +78,7 @@ class TasklistsController extends Controller
      */
     public function edit($id)
     {
-        $tasklist = Tasklist::find($id);
+        $tasklist = Task::find($id);
         
         return view('tasklists.edit', [
             'tasklist' => $tasklist,
@@ -94,7 +94,7 @@ class TasklistsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tasklist = Tasklist::find($id);
+        $tasklist = Task::find($id);
         $tasklist->content = $request->content;
         $tasklist->save();
         
@@ -109,7 +109,7 @@ class TasklistsController extends Controller
      */
     public function destroy($id)
     {
-        $tasklist = Tasklist::find($id);
+        $tasklist = Task::find($id);
         $tasklist->delete();
         
         return redirect('/');
