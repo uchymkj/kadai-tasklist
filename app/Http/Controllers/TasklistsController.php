@@ -34,7 +34,7 @@ class TasklistsController extends Controller
     {
         $tasklist = new Task;
         
-        return view('tasklist.create', [
+        return view('tasklists.create', [
             'tasklist' => $tasklist,
             ]);
     }
