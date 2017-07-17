@@ -4,6 +4,7 @@
 
     <h1>id = {{ $tasklist->id }} のタスク詳細ページ</h1>
     
+    <p>状態: {{ $tasklist->status }}</p>
     <p>{{ $tasklist->content }}</p>
     
     {!! link_to_route('tasklists.edit', 'このタスク編集', ['id' => $tasklist->id]) !!}
@@ -12,7 +13,5 @@
         {!! Form::submit('削除') !!}
     {!! Form::close() !!}
     
-    {!! link_to_route('tasklists.create', '新規タスクの投稿') !!}
-
     
 @endsection
