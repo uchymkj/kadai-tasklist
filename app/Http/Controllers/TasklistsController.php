@@ -50,7 +50,11 @@ class TasklistsController extends Controller
         $this->validate($request,[
             'status' => 'required',
             ]);
-            
+        
+        $this->validate($request,[
+            'content' => 'required',
+            ]);
+        
         $tasklist = new Task;
         $tasklist->status = $request->status;
         $tasklist->content = $request->content;
@@ -102,6 +106,11 @@ class TasklistsController extends Controller
          $this->validate($request,[
             'status' => 'required',
             ]);
+        
+        $this->validate($request,[
+            'content' => 'required',
+            ]);
+        
             
         $tasklist = Task::find($id);
         $tasklist->status = $request->status;
