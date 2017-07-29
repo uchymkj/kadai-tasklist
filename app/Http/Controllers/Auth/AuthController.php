@@ -28,6 +28,9 @@ class AuthController extends Controller
      *
      * @return void
      */
+    
+    protected $redirectedTo "/";
+    
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
