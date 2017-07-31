@@ -18,11 +18,17 @@ class TasklistsController extends Controller
      */
     public function index()
     {
-        $tasklists = Task::all();
-        
-        return view('tasklists.index', [
-            'tasklists' => $tasklists,
-        ]);
+        $data = [];
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            $tasklists = $user->tasklists()->paginate(50);
+
+            $data = [
+                'tasklists' => $tasklists,
+            ];
+            
+        }
+        return view('tasklists.index', $data);
     }
 
     /**
@@ -47,6 +53,7 @@ class TasklistsController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request,[
             'status' => 'required',
             ]);
@@ -54,13 +61,24 @@ class TasklistsController extends Controller
         $this->validate($request,[
             'content' => 'required',
             ]);
+        /*
+        $request->user()->tasklists()->create([
+            'status' => $request->status,
+        ]);
+        
+        $request->user()->tasklists()->create([
+            'content' => $request->content,
+        ]);
+        */
         
         $tasklist = new Task;
         $tasklist->status = $request->status;
         $tasklist->content = $request->content;
+        $user = \Auth::user();
+        $tasklist->user_id = $user->id;
         $tasklist->save();
         
-        return redirect('/');
+        return redirect('/tasklists');
         
     }
 
@@ -117,7 +135,7 @@ class TasklistsController extends Controller
         $tasklist->content = $request->content;
         $tasklist->save();
         
-        return redirect('/');
+        return redirect('/tasklists');
     }
 
     /**
@@ -129,9 +147,12 @@ class TasklistsController extends Controller
     public function destroy($id)
     {
         $tasklist = Task::find($id);
-        $tasklist->delete();
         
-        return redirect('/');
+        if (\Auth::user()->id === $tasklist->user_id) {
+            $tasklist->delete();
+        }
+        
+        return redirect('/tasklists');
         
     }
 }

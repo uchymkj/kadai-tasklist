@@ -12,7 +12,10 @@
 */
 
 
-Route::get('/', 'TasklistsController@index');
+Route::get('/', function() {
+    return view ('welcome');
+});
+
 //Route::resource('tasklists', 'TasklistsController');
 
 Route::get('/signup', 'Auth\AuthController@getRegister')->name('signup.get');
